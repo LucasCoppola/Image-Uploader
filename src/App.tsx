@@ -1,35 +1,20 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import DragDrop from './Drag&Drop'
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+const App = () => {
+	return (
+		<div className="h-screen flex flex-col justify-center items-center relative">
+			<div className="w-96 h-96 mx-auto px-8 py-4 bg-white rounded-lg shadow-md flex flex-col items-center">
+				<h1>Upload your image</h1>
+				<h4>Image should be Jpeg, Png...</h4>
+				<div className="flex items-center justify-center mt-4">
+					<DragDrop />
+				</div>
+				<p>Or</p>
+				<button>Choose a File</button>
+			</div>
+			<footer className="text-gray-500 text-xs absolute bottom-5">created by Lucas Coppola - devChallenges.io</footer>
+		</div>
+	)
 }
 
 export default App
