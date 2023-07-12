@@ -21,11 +21,9 @@ const storage = multer_1.default.diskStorage({
 const upload = (0, multer_1.default)({ storage: storage });
 app.post('/upload', upload.single('image'), function (req, res) {
     if (req.file) {
-        // File uploaded successfully
         res.status(200).json({ message: 'Image uploaded' });
     }
     else {
-        // No file was uploaded
         res.status(400).json({ error: 'No file uploaded' });
     }
 });
