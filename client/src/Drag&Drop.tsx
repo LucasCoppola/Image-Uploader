@@ -1,11 +1,33 @@
+import {useRef} from 'react'
 import SvgImage from './SvgImage'
 
 const DragDrop = () => {
+	const dropZoneRef  = useRef<HTMLLabelElement | null>(null)
+
+	function handleDragOver(e: React.DragEvent<HTMLDivElement>){
+		e.preventDefault()
+	}
+
+	function handleDrop(e: React.DragEvent<HTMLDivElement>){
+		e.preventDefault()
+
+		if(e.dataTransfer.files.length > 0){
+			const droppedFile = e.dataTransfer.files[0]
+			console.log('Dropped file:', droppedFile);
+		}	
+	}
+
+
 	return (
-		<div className="bg-[#f4fdff] flex items-center justify-center rounded-lg">
+		<div 
+			className="bg-[#f4fdff] flex items-center justify-center rounded-lg"
+			onDragOver={handleDragOver}
+			onDrop={handleDrop}
+			>
 			<label
 				htmlFor="dropzone-file"
 				className="flex w-80 flex-col items-center justify-center h-52 border-2 border-blue-100 border-dashed rounded-lg cursor-pointer hover:bg-blue-50"
+				ref={dropZoneRef}
 			>
 				<div className="flex flex-col items-center justify-center pt-5 pb-6">
 					<SvgImage />
