@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 import DragDrop from "./Drag&Drop"
 import SuccessCard from "./SuccessCard"
 
@@ -19,10 +19,14 @@ const App = () => {
 		try {
 			if (files && files.length > 0) {
 				const file = files[0]
+				if (!file.type || file.type === "" || !file.type.startsWith("image/") || file.size === 0) {
+					alert("Please upload an image file")
+					return
+				}
 				const formData = new FormData()
 				formData.append("image", file)
 
-				const response = await fetch("http://localhost:3000/upload", {
+				const response = await fetch(String(import.meta.env.VITE_API), {
 					method: "POST",
 					body: formData,
 				})
@@ -39,6 +43,22 @@ const App = () => {
 		}
 	}
 
+	useEffect(() => {
+		let timeoutId = Date.now()
+		if (image) {
+			setIsLoading(true)
+			timeoutId = setTimeout(() => {
+				setIsLoading(false)
+				if (image) {
+					setIsUploaded(true)
+				}
+			}, 2000)
+		}
+		return () => {
+			clearTimeout(timeoutId)
+		}
+	}, [image])
+
 	return isLoading ? (
 		<div className="flex items-center justify-center h-screen">
 			<div className="w-96 bg-white rounded-xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] overflow-hidden">
@@ -51,24 +71,23 @@ const App = () => {
 			</div>
 		</div>
 	) : isUploaded ? (
-		<SuccessCard />
+		<SuccessCard image={image} setIsUploaded={setIsUploaded} />
 	) : (
 		<div className="h-screen flex flex-col justify-center items-center relative">
-			<div className="w-96 h-[calc(100vh-170px)] mx-auto bg-white rounded-xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] overflow-hidden">
+			<div className="w-96 h-auto mx-auto bg-white rounded-xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] overflow-hidden">
 				<div className="px-8 py-4 flex flex-col items-center">
 					<h1 className="font-semibold text-gray-700 text-xl my-4">Upload your image</h1>
 					<h4 className="text-gray-500 text-xs">File should be Jpeg, Png...</h4>
 					<div className="flex items-center justify-center mt-4">
-						<DragDrop />
+						<DragDrop setImage={setImage} />
 					</div>
-					<img src={image ? URL.createObjectURL(image) : ""} alt={image?.name} />
 					<p className="text-gray-500 text-xs my-4">Or</p>
 					<form action="/upload" method="post" encType="multipart/form-data">
 						<input
 							type="file"
 							name="image"
 							ref={fileInputRef}
-							accept="image/png, image/jpeg"
+							accept="image/*"
 							style={{ display: "none" }}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
 								handleFileInputChange(e).catch((e) => console.error(e))
