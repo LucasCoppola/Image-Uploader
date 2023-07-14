@@ -30,14 +30,11 @@
 
 ## Overview
 
-![screenshot](blob:https://img-uploads.vercel.app/de13f090-3685-494c-a489-fd967ed5fbaa)
-
-Introduce your projects by taking a screenshot or a gif. Try to tell visitors a story about your project by answering:
+![screenshot](https://img-uploads-api.onrender.com/public/Captura%20de%20pantalla%202023-07-14%20121833.png)
 
 -   Where can I see your demo?
--   What was your experience?
--   What have you learned/improved?
--   Your wisdom? :)
+
+    You can see the demo of my project at [this link](https://img-uploads.vercel.app/). It's a simple image uploader application that allows you to upload an image file and get the URL of the uploaded image.
 
 ### Built With
 
