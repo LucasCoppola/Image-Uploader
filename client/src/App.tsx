@@ -1,6 +1,6 @@
-import { useRef, useState, useEffect } from "react"
-import DragDrop from "./Drag&Drop"
-import SuccessCard from "./SuccessCard"
+import { useEffect, useRef, useState } from 'react'
+import DragDrop from './Drag&Drop'
+import SuccessCard from './SuccessCard'
 
 const App = () => {
 	const [image, setImage] = useState<File | null>(null)
@@ -16,30 +16,31 @@ const App = () => {
 
 	const handleFileInputChange = async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
 		const files = e.target.files
+		setIsLoading(true)
 		try {
 			if (files && files.length > 0) {
 				const file = files[0]
-				if (!file.type || file.type === "" || !file.type.startsWith("image/") || file.size === 0) {
-					alert("Please upload an image file")
+				if (!file.type || file.type === '' || !file.type.startsWith('image/') || file.size === 0) {
+					alert('Please upload an image file')
 					return
 				}
 				const formData = new FormData()
-				formData.append("image", file)
+				formData.append('image', file)
 
 				const response = await fetch(String(import.meta.env.VITE_API), {
-					method: "POST",
-					body: formData,
+					method: 'POST',
+					body: formData
 				})
 
 				if (response.ok) {
 					setImage(file)
 				} else {
-					throw new Error("Image upload failed")
+					throw new Error('Image upload failed')
 				}
 			}
 		} catch (error) {
 			console.log(error)
-			alert("Something went wrong")
+			alert('Something went wrong')
 		}
 	}
 
@@ -71,7 +72,7 @@ const App = () => {
 			</div>
 		</div>
 	) : isUploaded ? (
-		<SuccessCard image={image} setIsUploaded={setIsUploaded} />
+		<SuccessCard image={image} />
 	) : (
 		<div className="h-screen flex flex-col justify-center items-center relative">
 			<div className="w-96 h-auto mx-auto bg-white rounded-xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] overflow-hidden">
@@ -88,22 +89,18 @@ const App = () => {
 							name="image"
 							ref={fileInputRef}
 							accept="image/*"
-							style={{ display: "none" }}
+							style={{ display: 'none' }}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
 								handleFileInputChange(e).catch((e) => console.error(e))
 							}}
 						/>
 					</form>
-					<button
-						className="bg-blue-600 mb-3 text-white px-4 py-2 rounded-lg text-sm"
-						onClick={handleFileButtonClick}>
+					<button className="bg-blue-600 mb-3 text-white px-4 py-2 rounded-lg text-sm" onClick={handleFileButtonClick}>
 						Choose a File
 					</button>
 				</div>
 			</div>
-			<footer className="text-gray-500 text-xs absolute bottom-5">
-				created by Lucas Coppola - devChallenges.io
-			</footer>
+			<footer className="text-gray-500 text-xs absolute bottom-5">created by Lucas Coppola - devChallenges.io</footer>
 		</div>
 	)
 }
