@@ -53,7 +53,7 @@ const App = () => {
 				if (image) {
 					setIsUploaded(true)
 				}
-			}, 2000)
+			}, 1000)
 		}
 		return () => {
 			clearTimeout(timeoutId)
