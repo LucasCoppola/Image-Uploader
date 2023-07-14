@@ -8,7 +8,7 @@ interface Data {
 }
 
 const App = () => {
-	const [image, setImage] = useState<File | string>("")
+	const [image, setImage] = useState<string>("")
 	const [isLoading, setIsLoading] = useState(false)
 	const [isUploaded, setIsUploaded] = useState(false)
 	const fileInputRef = useRef<HTMLInputElement | null>(null)

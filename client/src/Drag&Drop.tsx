@@ -1,7 +1,12 @@
 import { useRef } from "react"
 import SvgImage from "./SvgImage"
 
-const DragDrop = ({ setImage }: { setImage: (value: File | string) => void }) => {
+interface Data {
+	message: string
+	url: string
+}
+
+const DragDrop = ({ setImage }: { setImage: (value: string) => void }) => {
 	const dropZoneRef = useRef<HTMLLabelElement | null>(null)
 
 	function handleDragOver(e: React.DragEvent<HTMLDivElement>) {
@@ -21,7 +26,16 @@ const DragDrop = ({ setImage }: { setImage: (value: File | string) => void }) =>
 				alert("Please upload an image file")
 				return
 			}
-			setImage(droppedFile)
+			const formData = new FormData()
+			formData.append("image", droppedFile)
+
+			fetch(String(import.meta.env.VITE_API), {
+				method: "POST",
+				body: formData,
+			})
+				.then((response) => response.json())
+				.then((data: Data) => setImage(data.url))
+				.catch((error) => console.error(error))
 		}
 	}
 
