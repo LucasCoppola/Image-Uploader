@@ -1,14 +1,14 @@
-import { useState } from 'react'
+import { useState } from "react"
 
-const SuccessCard = ({ image }: { image: File | null }) => {
+const SuccessCard = ({ image }: { image: File | string }) => {
 	const [isCopied, setIsCopied] = useState(false)
-	const imageURL = image ? URL.createObjectURL(image) : ''
+	const imageURL = image instanceof File ? URL.createObjectURL(image) : image
 
 	const copy = () => {
 		navigator.clipboard
 			.writeText(imageURL)
 			.then(() => setIsCopied(true))
-			.catch((err) => console.error('Failed to copy text: ', err))
+			.catch((err) => console.error("Failed to copy text: ", err))
 
 		setTimeout(() => {
 			setIsCopied(false)
@@ -24,7 +24,7 @@ const SuccessCard = ({ image }: { image: File | null }) => {
 					</div>
 				</div>
 				<h1 className="font-semibold text-gray-700 text-center my-1 text-xl">Uploaded Successfully!</h1>
-				<img src={imageURL} alt={image?.name} className="w-80 h-72 rounded-2xl my-4" />
+				<img src={imageURL} alt={imageURL} className="w-80 h-72 rounded-2xl my-4" />
 				<div className="relative flex items-center mt-2">
 					<input
 						type="text"
@@ -34,13 +34,14 @@ const SuccessCard = ({ image }: { image: File | null }) => {
 					/>
 					<button
 						onClick={copy}
-						className="w-[5.2rem] absolute right-1 rounded-lg py-2 px-3 bg-blue-500 text-white text-xs flex items-center justify-center"
-					>
-						{isCopied ? 'Copied!' : 'Copy Link'}
+						className="w-[5.2rem] absolute right-1 rounded-lg py-2 px-3 bg-blue-500 text-white text-xs flex items-center justify-center">
+						{isCopied ? "Copied!" : "Copy Link"}
 					</button>
 				</div>
 			</div>
-			<footer className="text-gray-500 text-xs absolute bottom-5">created by Lucas Coppola - devChallenges.io</footer>
+			<footer className="text-gray-500 text-xs absolute bottom-5">
+				created by Lucas Coppola - devChallenges.io
+			</footer>
 		</div>
 	)
 }

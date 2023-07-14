@@ -10,6 +10,7 @@ const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(body_parser_1.default.json());
+app.use('/public', express_1.default.static('public'));
 const storage = multer_1.default.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public');
@@ -21,7 +22,8 @@ const storage = multer_1.default.diskStorage({
 const upload = (0, multer_1.default)({ storage: storage });
 app.post('/upload', upload.single('image'), function (req, res) {
     if (req.file) {
-        res.status(200).json({ message: 'Image uploaded' });
+        const imageUrl = `http://localhost:3000/public/${req.file.filename}`;
+        res.status(200).json({ message: 'Image uploaded', url: imageUrl });
     }
     else {
         res.status(400).json({ error: 'No file uploaded' });
