@@ -16,18 +16,6 @@
   </h3>
 </div>
 
-<!-- TABLE OF CONTENTS -->
-
-## Table of Contents
-
--   [Overview](#overview)
--   [Built With](#built-with)
--   [Features](#features)
--   [How to use](#how-to-use)
--   [Contact](#contact)
-
-<!-- OVERVIEW -->
-
 ## Overview
 
 ![screenshot](https://img-uploads-api.onrender.com/public/Captura%20de%20pantalla%202023-07-14%20121833.png)
