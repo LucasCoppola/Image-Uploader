@@ -18,7 +18,7 @@
 
 ## Overview
 
-![screenshot](https://img-uploads-api.onrender.com/public/Captura%20de%20pantalla%202023-07-14%20121833.png)
+![screenshot](https://img-uploads-api.onrender.com/public/img-uploader.png)
 
 -   Where can I see your demo?
 
